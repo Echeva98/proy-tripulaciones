@@ -41,7 +41,7 @@ def calcular_cuotas_por_tipo(gastos_previstos, cantidad_vecinos, vecinos_con_baj
     return cuotas_con_bajo, cuotas_sin_bajo, cuota_con_atico
 
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def index():
     return "Cálculo cuota por vecino"
 
@@ -76,4 +76,4 @@ def calculo_cuota():
     
 
 if __name__ == "__main__":
-	app.run()
+	app.run(debug=True, port=8000)
