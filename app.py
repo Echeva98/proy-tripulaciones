@@ -9,8 +9,7 @@ import math
 # engine = create_engine(url)
 
 # Flask, needed
-app = Flask(__name__)
-app.config["DEBUG"] = True
+
 
 
 def calcular_cuotas_por_tipo(gastos_previstos, cantidad_vecinos, vecinos_con_bajo, vecinos_con_atico,  cuota_inicial):
@@ -40,6 +39,7 @@ def calcular_cuotas_por_tipo(gastos_previstos, cantidad_vecinos, vecinos_con_baj
 
     return cuotas_con_bajo, cuotas_sin_bajo, cuota_con_atico
 
+app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def index():
@@ -54,22 +54,22 @@ def calculo_cuota():
     gastos_previstos = [(item['años'], item['monto']) for item in data.get('tuplas', [])]
 
     cantidad_vecinos = 12 
-    vecinos_con_bajo = 2 
-    vecinos_con_atico = 1 
+    # vecinos_con_bajo = 2 
+    # vecinos_con_atico = 1 
 
     cuota_inicial = 40 
 
-    cuotas_vecino_con_bajo, cuotas_vecino, cuotas_vecino_con_atico = calcular_cuotas_por_tipo(gastos_previstos, cantidad_vecinos=cantidad_vecinos, vecinos_con_bajo=vecinos_con_bajo, vecinos_con_atico=vecinos_con_atico, cuota_inicial=cuota_inicial)
+    # cuotas_vecino_con_bajo, cuotas_vecino, cuotas_vecino_con_atico = calcular_cuotas_por_tipo(gastos_previstos, cantidad_vecinos=cantidad_vecinos, cuota_inicial=cuota_inicial)
 
-    cuotas_vecino_con_bajo = [round(valor, 2) for valor in cuotas_vecino_con_bajo]
-    cuotas_vecino = [round(valor, 2) for valor in cuotas_vecino]
-    cuotas_vecino_con_atico = [round(valor, 2) for valor in cuotas_vecino_con_atico]
+    # cuotas_vecino_con_bajo = [round(valor, 2) for valor in cuotas_vecino_con_bajo]
+    # cuotas_vecino = [round(valor, 2) for valor in cuotas_vecino]
+    # cuotas_vecino_con_atico = [round(valor, 2) for valor in cuotas_vecino_con_atico]
 
-    return jsonify({
-        'cuotas_vecino_con_bajo': cuotas_vecino_con_bajo,
-        'cuotas_vecino': cuotas_vecino,
-        'cuotas_vecino_con_atico': cuotas_vecino_con_atico
-    })
+    
+
+    output = calcular_cuotas_por_tipo(gastos_previstos, n_propie=cantidad_vecinos, cuota=cuota_inicial)
+
+    return jsonify({'Nueva/s cuota/s': output})
 
 
 # (5, 3000), (7, 1500)
