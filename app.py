@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS, cross_origin
 import json
 import pandas as pd
 from sqlalchemy import create_engine
@@ -40,6 +41,7 @@ def calcular_cuotas_por_tipo(gastos_previstos, cantidad_vecinos, vecinos_con_baj
     return cuotas_con_bajo, cuotas_sin_bajo, cuota_con_atico
 
 app = Flask(__name__)
+cors = CORS(app)
 
 @app.route('/', methods=['GET'])
 def index():
@@ -47,7 +49,8 @@ def index():
 
 
 
-@app.route('/calculo/', methods=['POST'])
+@app.route('/calculo/', methods=['GET','POST'])
+@cross_origin(origin="http://localhost:5173")
 def calculo_cuota():
 
     data = request.json
