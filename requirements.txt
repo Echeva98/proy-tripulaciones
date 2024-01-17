@@ -7,3 +7,4 @@ matplotlib
 psycopg2-binary
 pmdarima
 gunicorn
+flask-cors
